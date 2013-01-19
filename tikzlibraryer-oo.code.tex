@@ -1,0 +1,330 @@
+%%
+%% This is file `tikzlibraryer-oo.code.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% er-oo.dtx  (with options: `tikzlibrary')
+%% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+%% er-oo - TikZ/PGF library object-oriented to draw ER models
+%% 
+%% E-mail: claudio . fiandrino at gmail dot com
+%% 
+%% Released under the LaTeX Project Public License v1.3c or later
+%% See http://www.latex-project.org/lppl.txt
+%% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+%% 
+\usepgfmodule{oo}
+\usetikzlibrary{automata,shapes}
+
+\definecolor{er-purple}{rgb}{.67,.51,1}
+\definecolor{er-green}{rgb}{.464,.932,0}
+
+\pgfooclass{entity}{
+
+ \attribute text;
+ \attribute border color=orange;
+ \attribute fill color=orange!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute width=1.75cm;
+ \attribute height=1cm;
+
+ \method entity() {
+ }
+
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+
+ \method draw(#1,#2) {
+  \node [rectangle,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+
+ \method place(#1) {
+  \node [rectangle,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }
+ }
+
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+
+}
+
+\pgfooclass{relationship}{
+
+ \attribute text;
+ \attribute border color=er-green;
+ \attribute fill color=er-green!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute width=1.5cm;
+ \attribute height=0.75cm;
+
+ \method relationship() {
+ }
+
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+
+ \method draw(#1,#2) {
+  \node [diamond,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+
+ \method place(#1) {
+  \node [diamond,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }
+ }
+
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+
+}
+
+\tikzset{multi attribute/.style={double,double distance=1.5pt}}
+\tikzset{derived attribute/.style={dashed}}
+\tikzset{attribute type/.style={thick,#1}}
+
+\pgfooclass{attribute}{
+
+ \attribute text;
+ \attribute border color=er-purple;
+ \attribute fill color=er-purple!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute type;
+ \attribute width=1.5cm;
+ \attribute height=0.35cm;
+
+ \method attribute() {
+ }
+
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+
+ \method set type(#1) {
+  \pgfooset{type}{#1}
+ }
+
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+
+ \method draw(#1,#2) {
+  \node [ellipse,
+    attribute type={\pgfoovalueof{type}},
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+
+ \method place(#1) {
+  \node [ellipse,
+    attribute type={\pgfoovalueof{type}},
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }
+ }
+
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+
+}
+%% 
+%% Copyright (C) 2012 by Claudio Fiandrino <claudio.fiandrino@gmail.com>
+%% 
+%% This file may be distributed and/or modified under the conditions
+%% of the LaTeX Project Public License, either version 1.3 of this
+%% license or (at your option) any later version.
+%% The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%% 
+%% This work is "maintained" (as per LPPL maintenance status) by
+%% Andrew Stacey.
+%% 
+%% This work consists of the files  er-oo.dtx
+%%                                  hobby_doc.tex
+%% and the derived files            hobby.code.tex
+%%                                  pgflibraryhobby.code.tex
+%%                                  tikzlibraryhobby.code.tex
+%%                                  hobby.ins
+%%                                  hobby.pdf
+%%                                  hobby_doc.pdf
+%%                                  README.txt
+%% 
+%%
+%% End of file `tikzlibraryer-oo.code.tex'.
