@@ -1,0 +1,91 @@
+%%
+%% This is file `example.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% er-oo.dtx  (with options: `example')
+%% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+%% er-oo - TikZ/PGF library object-oriented to draw ER models
+%% 
+%% E-mail: claudio . fiandrino at gmail dot com
+%% 
+%% Released under the LaTeX Project Public License v1.3c or later
+%% See http://www.latex-project.org/lppl.txt
+%% * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+%% 
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{er-oo}
+
+\begin{document}
+
+\begin{tikzpicture}[node distance=2.75cm]
+\pgfoonew \myentity=new entity()
+\pgfoonew \myrel=new relationship()
+\pgfoonew \myattr=new attribute()
+
+\myentity.set and draw(tool,Tool,1,0)
+\myattr.set and place(tool-id,\underline{ID},left of=tool)
+\myattr.set and place(tool-name,Name,right of=tool)
+\myentity.multi connect(tool-id,tool-name)
+
+\myrel.set and place(rel,Uses,above of=tool)
+\myrel.total relation(tool)
+
+\myentity.set text color(blue)
+\myentity.set border color(red)
+\myentity.set and place(per,Person,above of=rel)
+
+\myattr.set and place(per-id,\underline{ID},left of=per)
+
+\myattr.set type(derived attribute)
+\myattr.set and place(per-age,Age,right of=per)
+
+\myattr.set type() % to reset the derived attribute style
+\myattr.set and place(per-name,Name,above left of=per)
+
+\myattr.set type(multi attribute)
+\myattr.set and place(per-phone,Phone,above of=per)
+
+\myattr.set type() % to reset the multi attribute style
+\myattr.set and place(per-addr,Address,above right of=per)
+
+\myattr.set and place(street,Street,above right of=per-addr)
+\myattr.connect(per-addr)
+
+\myattr.set and place(city,City,right of=per-addr)
+\myattr.connect(per-addr)
+
+\myentity.multi connect(per-id,per-age,per-name,per-phone,per-addr,rel)
+\end{tikzpicture}
+\end{document}
+%% 
+%% Copyright (C) 2012 by Claudio Fiandrino <claudio.fiandrino@gmail.com>
+%% 
+%% This file may be distributed and/or modified under the conditions
+%% of the LaTeX Project Public License, either version 1.3 of this
+%% license or (at your option) any later version.
+%% The latest version of this license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%% 
+%% This work is "maintained" (as per LPPL maintenance status) by
+%% Andrew Stacey.
+%% 
+%% This work consists of the files  er-oo.dtx
+%%                                  hobby_doc.tex
+%% and the derived files            hobby.code.tex
+%%                                  pgflibraryhobby.code.tex
+%%                                  tikzlibraryhobby.code.tex
+%%                                  hobby.ins
+%%                                  hobby.pdf
+%%                                  hobby_doc.pdf
+%%                                  README.txt
+%% 
+%%
+%% End of file `example.tex'.
