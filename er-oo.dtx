@@ -1,0 +1,756 @@
+% \iffalse meta-comment
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+er-oo - TikZ/PGF library object-oriented to draw ER models
+
+E-mail: claudio . fiandrino at gmail dot com
+
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+The package defines simple customizable classes and methods
+to draw ER models with TikZ using an object-oriented programming
+paradigm.
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+er-oo - TikZ/PGF library object-oriented to draw ER models
+
+E-mail: claudio . fiandrino at gmail dot com
+
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+\endpreamble
+\postamble
+
+Copyright (C) 2012 by Claudio Fiandrino <claudio.fiandrino@gmail.com>
+
+This file may be distributed and/or modified under the conditions
+of the LaTeX Project Public License, either version 1.3 of this
+license or (at your option) any later version.
+The latest version of this license is in:
+
+   http://www.latex-project.org/lppl.txt
+
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work is "maintained" (as per LPPL maintenance status) by
+Andrew Stacey.
+
+This work consists of the files  er-oo.dtx
+                                 hobby_doc.tex
+and the derived files            hobby.code.tex
+                                 pgflibraryhobby.code.tex
+                                 tikzlibraryhobby.code.tex
+                                 hobby.ins
+                                 hobby.pdf
+                                 hobby_doc.pdf
+                                 README.txt
+
+\endpostamble
+\usedir{tex/latex/hobby}
+\generate{\file{tikzlibraryer-oo.code.tex} {\from{er-oo.dtx}{tikzlibrary}}}
+\generate{\file{example.tex} {\from{er-oo.dtx}{example}}}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{source/latex/hobby}
+\generate{
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\nopreamble\nopostamble
+\generate{
+   \file{README.txt}{\from{\jobname.dtx}{readme}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+\usepackage{charter,pxfonts}
+\usepackage{tikz}
+\usetikzlibrary{er-oo}
+\usepackage[margin=3cm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+
+\global\mdfdefinestyle{exampledefault}{%
+outerlinewidth=4pt,innerlinewidth=0pt,
+outerlinecolor=orange,roundcorner=4pt,
+skipabove=1ex,
+innertopmargin=1.5ex, innerbottommargin=1.5ex,
+}
+
+\tikzstyle{titregris} =
+     [draw=gray!80!black, thick, fill=white, shading = optiontitle, %
+      text=gray!80!black, rectangle, rounded corners, right,minimum height=.7cm]
+\pgfdeclareverticalshading{optionbackground}{100bp}
+          {color(0bp)=(blue!20!cyan!40); color(90bp)=(blue!50!cyan!2);color(100bp)=(white)}
+\pgfdeclareverticalshading{optiontitle}{100bp}
+          {color(0bp)=(orange!40);color(90bp)=(orange!2);color(100bp)=(white)}
+\newcounter{exercise}
+\renewcommand*\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@title{}
+\define@key{mdf}{title}{%
+    \def\mdf@@title{#1}
+}
+\mdfdefinestyle{optionstyle}{%
+  outerlinewidth=1em,outerlinecolor=white,%
+  leftmargin=-1em,rightmargin=-1em,%
+  middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
+  apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+                       shading = optionbackground}}},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={-1em},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  fontcolor=gray!20!black,
+  settings={\sffamily},
+  singleextra={%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\mdf@@title~}~};
+   },
+  firstextra={%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\mdf@@title~}~};
+   },
+}
+\makeatother
+
+\newenvironment{option}[1]{%
+\begin{mdframed}[style=optionstyle, title=#1]
+}{\end{mdframed}}
+\usepackage{hypdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\addtolength{\hoffset}{.4in}
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{233}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+%
+% \GetFileInfo{hf-tikz.sty}
+%
+% \title{The \textsf{er-oo} library\thanks{This document
+% corresponds to \textsf{er-oo}~0.2,
+% dated 19/01/2013.}}
+% \author{Claudio Fiandrino\thanks{e-mail: \texttt{claudio dot fiandrino at gmail dot com}}}
+% \maketitle
+% 
+% \section{Introduction}
+% The idea for the library cames out while attempting to provide an exhaustive answer to \href{http://tex.stackexchange.com/questions/78357/drawing-relationships-between-elements-of-a-database}{this question} in \href{http://tex.stackexchange.com}{TeX.SX}.
+% 
+% Here is a code with a minimal working example showing how the library should be used:
+% \begin{mdframed}[style=exampledefault]
+% \begin{verbatim}
+% \documentclass{article}
+% 
+% \usepackage{tikz}
+% \usetikzlibrary{er-oo}
+% 
+% \begin{document}
+% \begin{tikzpicture}[node distance=2.75cm]
+% % new objects
+% \pgfoonew \myentity=new entity()
+% \pgfoonew \myrel=new relationship()
+% \pgfoonew \myattr=new attribute()
+% 
+% % entity tool
+% \myentity.set and draw(tool,Tool,1,0) % this stands for:
+% % \myentity.set label(tool)
+% % \myentity.text(Tool)
+% % \myentity.draw(1,0)
+% \myattr.set and place(tool-id,\underline{ID},left of=tool) % similarly:
+% % \myattr.set label(tool-id)
+% % \myattr.text(\underline{ID})
+% % \myattr.place(left of=tool)
+% \myattr.set and place(tool-name,Name,right of=tool)
+% \myentity.multi connect(tool-id,tool-name)
+% 
+% % relation
+% \myrel.set and place(rel,Uses,above of=tool)
+% \myrel.total relation(tool)
+%
+% \end{tikzpicture}
+% \end{document}
+% \end{verbatim}
+% \end{mdframed}
+% \pagebreak
+% The result:
+% \begin{center}
+% \begin{tikzpicture}[node distance=2.75cm]
+% % new objects
+% \pgfoonew \myentity=new entity()
+% \pgfoonew \myrel=new relationship()
+% \pgfoonew \myattr=new attribute()
+% 
+% % entity tool
+% \myentity.set and draw(tool,Tool,1,0)
+% \myattr.set and place(tool-id,\underline{ID},left of=tool)
+% \myattr.set and place(tool-name,Name,right of=tool)
+% \myentity.multi connect(tool-id,tool-name)
+% 
+% % relation
+% \myrel.set and place(rel,Uses,above of=tool)
+% \myrel.total relation(tool)
+%
+% \end{tikzpicture}
+% \end{center}
+%
+% \section{Using the library}
+% To use the library you could download the \verb|.dtx| file and compile it with pdflatex. This will generate the file \verb|tikzlibraryer-oo.code.tex| which actually is the library (it could also be downloaded directly). Then, the suggested procedure is to install it in your personal tree of your distribution, but it is aslo possible to copy \verb|tikzlibraryer-oo.code.tex| directly in the directory of your main \verb|.tex| file.
+%
+% \section{Classes and methods}
+%
+% In this section are presented the classes and methods that the library provides. Most of methods are common to all classes, while few of them are specific per class.
+% 
+% There are three classes:
+% \begin{itemize}
+% \item entity;
+% \item relationship;
+% \item attribute.
+% \end{itemize}
+% 
+% Each class has its own constructor method, so to instantiate new objects use:
+% \begin{verbatim}
+% \pgfoonew \myobject=new <class>()
+% \end{verbatim}
+% where \verb|<class>| is one of the three mentione above.
+%
+% \subsection{Methods common to all classes}
+% At first are shown methods useful to customize objects.
+%
+% \begin{option}{text}
+% This method sets the text of the object. Usage:
+% \begin{verbatim}\myobject.text(some text)\end{verbatim}
+%
+% \end{option}
+% \pagebreak
+%
+% \begin{option}{set border color}
+% This method sets the border color of the object. Usage:
+% \begin{verbatim}\myobject.set border color(color)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set fill color}
+% This method sets the background color of the object. Usage:
+% \begin{verbatim}\myobject.set fill color(color)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set text color}
+% This method sets the text color of the object. Usage:
+% \begin{verbatim}\myobject.set text color(color)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set label}
+% This method sets a label for the object. The label could be used subsequently to connect objects. Usage:
+% \begin{verbatim}\myobject.set label(label)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set width}
+% This method defines the width of the object. Usage:
+% \begin{verbatim}\myobject.set width(width)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set height}
+% This method defines the height of the object. Usage:
+% \begin{verbatim}\myobject.set height(height)\end{verbatim}
+%
+% \end{option}
+% \bigskip
+%
+% The methods lists untill now should be provided \emph{before} actually deploying an object. Object deplyoment could be realized by means of the following methods.
+% \begin{option}{draw}
+% This method sets the position, in terms of coordinates, where the object is located. Usage:
+% \begin{verbatim}\myobject.draw(x,y)\end{verbatim}
+%
+% \noindent Example: \verb|\myobject.draw(0,0)|
+%
+% \end{option}
+%
+% \begin{option}{place}
+% This method sets the position, in terms of the position of another object, where the object is located. Usage:
+% \begin{verbatim}\myobject.place(location)\end{verbatim}
+%
+% \noindent Example: \verb|\myobject.place(above of=x)|
+% Notice that \verb|x| is the label of the other object.
+%
+% \end{option}
+% \pagebreak
+%
+% \begin{option}{set and draw}
+% This method is a composed method: it set the label, the text and the position of an object. Usage:
+% \begin{verbatim}\myobject.set and draw(label,text,x,y)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{set and place}
+% This method, similar to the previous one sets the label, the text and the position of an object. Usage:
+% \begin{verbatim}\myobject.set and place(label,text,position)\end{verbatim}
+% \end{option}
+% \bigskip
+%
+% Now the methods that draw the connections. Connections are depicted by means of the object labels, thus it is important to provide them always.
+%
+% \begin{option}{connect}
+% This method connect one object with another one. Usage:
+% \begin{verbatim}\myobject.connect(label)\end{verbatim}
+%
+% \end{option}
+%
+% \begin{option}{multi connect}
+% This method connect one object with more than one other object. Usage:
+% \begin{verbatim}\myobject.multi connect(list of labels)\end{verbatim}
+%
+%
+% \noindent Example: \verb|\myobject.multi connect(label a,label b, label c)|
+%
+% \end{option}
+% 
+% \begin{option}{total relation}
+% This method connect one object with another one with a total relation. Usage:
+% \begin{verbatim}\myobject.total relation(label)\end{verbatim}
+%
+% \end{option}
+%
+% \subsection{Method for attribute}
+% The attribute class has a method not present in other classes. This because attributes could be of some type:
+% \begin{itemize}
+% \item normal;
+% \item derived;
+% \item multi;
+% \end{itemize}
+% and each one has its own representation.
+% 
+% \begin{option}{set type}
+% This method customizes the type of the attribute object. Usage:
+% \begin{verbatim}\myobject.set type(type)\end{verbatim}
+%
+% \end{option}
+% \bigskip
+%
+% By default the normal type is used. To use the derived attribute set 
+% \begin{verbatim}
+% \myobject.set type(derived attribute)
+% \end{verbatim} while to use the multi attribute set
+% \begin{verbatim}
+% \myobject.set type(multi attribute)
+% \end{verbatim}
+%
+% \StopEventually{\PrintChanges}
+% \section{Implementation - TikZ Library}
+%
+% \iffalse
+%<*tikzlibrary>
+% \fi
+% 
+%    \begin{macrocode}
+\usepgfmodule{oo}
+\usetikzlibrary{automata,shapes}
+
+\definecolor{er-purple}{rgb}{.67,.51,1}
+\definecolor{er-green}{rgb}{.464,.932,0}
+
+% Entity Class
+\pgfooclass{entity}{
+ 
+ \attribute text;
+ \attribute border color=orange;
+ \attribute fill color=orange!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute width=1.75cm;
+ \attribute height=1cm;
+ 
+ \method entity() {
+ }
+ 
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+ 
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+ 
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+ 
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+ 
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+ 
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+ 
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+ 
+ \method draw(#1,#2) {
+  \node [rectangle,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+ 
+ \method place(#1) {
+  \node [rectangle,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+ 
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+ 
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+ 
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }  
+ }
+ 
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+ 
+}
+
+% Relationship Class
+\pgfooclass{relationship}{
+ 
+ \attribute text;
+ \attribute border color=er-green;
+ \attribute fill color=er-green!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute width=1.5cm;
+ \attribute height=0.75cm;
+ 
+ \method relationship() {
+ }
+ 
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+ 
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+ 
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+ 
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+ 
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+ 
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+ 
+ \method draw(#1,#2) {
+  \node [diamond,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+ 
+ \method place(#1) {
+  \node [diamond,
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+ 
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+ 
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }  
+ }
+ 
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+ 
+}
+
+% Attribute Class
+\tikzset{multi attribute/.style={double,double distance=1.5pt}}
+\tikzset{derived attribute/.style={dashed}}
+\tikzset{attribute type/.style={thick,#1}}
+
+\pgfooclass{attribute}{
+ 
+ \attribute text;
+ \attribute border color=er-purple;
+ \attribute fill color=er-purple!20;
+ \attribute text color=black;
+ \attribute label;
+ \attribute type;
+ \attribute width=1.5cm;
+ \attribute height=0.35cm;
+ 
+ \method attribute() {
+ }
+ 
+ \method text(#1) {
+  \pgfooset{text}{#1}
+  }
+ 
+ \method set border color(#1) {
+  \pgfooset{border color}{#1}
+ }
+ 
+ \method set fill color(#1) {
+  \pgfooset{fill color}{#1}
+ }
+ 
+ \method set text color(#1) {
+  \pgfooset{text color}{#1}
+ }
+ 
+ \method set label(#1) {
+  \pgfooset{label}{#1}
+ }
+ 
+ \method set type(#1) {
+  \pgfooset{type}{#1}
+ }
+
+ \method set width(#1) {
+  \pgfooset{width}{#1}
+ }
+ 
+ \method set height(#1) {
+  \pgfooset{height}{#1}
+ }
+ 
+ \method draw(#1,#2) {
+  \node [ellipse,
+    attribute type={\pgfoovalueof{type}},
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    ] (\pgfoovalueof{label}) at (#1,#2) {\pgfoovalueof{text}};
+ }
+ 
+ \method place(#1) {
+  \node [ellipse,
+    attribute type={\pgfoovalueof{type}},
+    draw=\pgfoovalueof{border color},
+    fill=\pgfoovalueof{fill color},
+    text=\pgfoovalueof{text color},
+    minimum width=\pgfoovalueof{width},
+    minimum height=\pgfoovalueof{height},
+    #1
+    ] (\pgfoovalueof{label}) {\pgfoovalueof{text}};
+ }
+
+ \method set and draw(#1,#2,#3,#4) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.draw(#3,#4)
+ }
+ 
+ \method set and place(#1,#2,#3) {
+  \pgfoothis.set label(#1)
+  \pgfoothis.text(#2)
+  \pgfoothis.place(#3)
+ }
+ 
+ \method connect(#1) {
+  \draw[-] (\pgfoovalueof{label})--(#1);
+ }
+ 
+ \method multi connect(#1) {
+  \foreach \i in {#1}{
+    \draw[-] (\pgfoovalueof{label})--(\i);
+  }  
+ }
+ 
+ \method total relation(#1) {
+  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ }
+ 
+}
+%    \end{macrocode}
+%
+% \iffalse
+%</tikzlibrary>
+% \fi
+%
+% Here is a complete example:
+% \iffalse
+%<*example>
+% \fi
+%    \begin{macrocode}
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{er-oo}
+
+\begin{document}
+
+\begin{tikzpicture}[node distance=2.75cm]
+% new objects
+\pgfoonew \myentity=new entity()
+\pgfoonew \myrel=new relationship()
+\pgfoonew \myattr=new attribute()
+
+% entity tool
+\myentity.set and draw(tool,Tool,1,0)
+\myattr.set and place(tool-id,\underline{ID},left of=tool)
+\myattr.set and place(tool-name,Name,right of=tool)
+\myentity.multi connect(tool-id,tool-name)
+
+% relation
+\myrel.set and place(rel,Uses,above of=tool)
+\myrel.total relation(tool)
+
+% entity person with some customizations
+\myentity.set text color(blue)
+\myentity.set border color(red)
+\myentity.set and place(per,Person,above of=rel)
+
+\myattr.set and place(per-id,\underline{ID},left of=per)
+
+\myattr.set type(derived attribute)
+\myattr.set and place(per-age,Age,right of=per)
+
+\myattr.set type() % to reset the derived attribute style
+\myattr.set and place(per-name,Name,above left of=per)
+
+\myattr.set type(multi attribute)
+\myattr.set and place(per-phone,Phone,above of=per)
+
+\myattr.set type() % to reset the multi attribute style
+\myattr.set and place(per-addr,Address,above right of=per)
+
+\myattr.set and place(street,Street,above right of=per-addr)
+\myattr.connect(per-addr)
+
+\myattr.set and place(city,City,right of=per-addr)
+\myattr.connect(per-addr)
+
+\myentity.multi connect(per-id,per-age,per-name,per-phone,per-addr,rel)
+\end{tikzpicture}
+\end{document}
+%    \end{macrocode}
+% \iffalse
+%</example>
+% \fi
+%
+% 
+%\Finale
