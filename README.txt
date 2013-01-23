@@ -1,7 +1,7 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 er-oo - TikZ/PGF library object-oriented to draw ER models
 
-E-mail: claudio . fiandrino at gmail dot com
+E-mail: claudio dot fiandrino at gmail dot com
 
 Released under the LaTeX Project Public License v1.3c or later
 See http://www.latex-project.org/lppl.txt
