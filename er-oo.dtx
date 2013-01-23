@@ -152,7 +152,7 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 %</driver>
 % \fi
 %
-% \CheckSum{233}
+% \CheckSum{223}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -171,6 +171,9 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 %   Right brace   \}     Tilde         \~}
 %
 %
+% \changes{v0.1}{2013/01/17}{Initial version}
+% \changes{v0.2}{2013/01/19}{First release in dtx}
+% \changes{v0.3}{2013/01/23}{Fixed connections method with source/destination paradigm}
 %
 % \GetFileInfo{hf-tikz.sty}
 %
@@ -208,11 +211,11 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 % % \myattr.text(\underline{ID})
 % % \myattr.place(left of=tool)
 % \myattr.set and place(tool-name,Name,right of=tool)
-% \myentity.multi connect(tool-id,tool-name)
+% \myentity.multi connect(tool,{tool-id,tool-name})
 % 
 % % relation
 % \myrel.set and place(rel,Uses,above of=tool)
-% \myrel.total relation(tool)
+% \myrel.total relation(rel,tool)
 %
 % \end{tikzpicture}
 % \end{document}
@@ -231,11 +234,11 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 % \myentity.set and draw(tool,Tool,1,0)
 % \myattr.set and place(tool-id,\underline{ID},left of=tool)
 % \myattr.set and place(tool-name,Name,right of=tool)
-% \myentity.multi connect(tool-id,tool-name)
+% \myentity.multi connect(tool,{ tool-id,tool-name})
 % 
 % % relation
 % \myrel.set and place(rel,Uses,above of=tool)
-% \myrel.total relation(tool)
+% \myrel.total relation(rel,tool)
 %
 % \end{tikzpicture}
 % \end{center}
@@ -342,22 +345,22 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 %
 % \begin{option}{connect}
 % This method connect one object with another one. Usage:
-% \begin{verbatim}\myobject.connect(label)\end{verbatim}
+% \begin{verbatim}\myobject.connect(source,destination)\end{verbatim}
 %
 % \end{option}
 %
 % \begin{option}{multi connect}
 % This method connect one object with more than one other object. Usage:
-% \begin{verbatim}\myobject.multi connect(list of labels)\end{verbatim}
+% \begin{verbatim}\myobject.multi connect(source,{list of labels})\end{verbatim}
 %
 %
-% \noindent Example: \verb|\myobject.multi connect(label a,label b, label c)|
+% \noindent Example: \verb|\myobject.multi connect(source,{label a,label b, label c})|
 %
 % \end{option}
 % 
 % \begin{option}{total relation}
 % This method connect one object with another one with a total relation. Usage:
-% \begin{verbatim}\myobject.total relation(label)\end{verbatim}
+% \begin{verbatim}\myobject.total relation(source,destination)\end{verbatim}
 %
 % \end{option}
 %
@@ -474,18 +477,18 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
   \pgfoothis.place(#3)
  }
  
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
  
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }  
  }
  
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
  
 }
@@ -565,18 +568,18 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
   \pgfoothis.place(#3)
  }
  
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
-
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ 
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }  
  }
  
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
  
 }
@@ -667,18 +670,18 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
   \pgfoothis.place(#3)
  }
  
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
  
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }  
  }
  
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
  
 }
@@ -710,11 +713,11 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 \myentity.set and draw(tool,Tool,1,0)
 \myattr.set and place(tool-id,\underline{ID},left of=tool)
 \myattr.set and place(tool-name,Name,right of=tool)
-\myentity.multi connect(tool-id,tool-name)
+\myentity.multi connect(tool,{tool-id,tool-name})
 
 % relation
 \myrel.set and place(rel,Uses,above of=tool)
-\myrel.total relation(tool)
+\myrel.total relation(rel,tool)
 
 % entity person with some customizations
 \myentity.set text color(blue)
@@ -736,12 +739,11 @@ innertopmargin=1.5ex, innerbottommargin=1.5ex,
 \myattr.set and place(per-addr,Address,above right of=per)
 
 \myattr.set and place(street,Street,above right of=per-addr)
-\myattr.connect(per-addr)
 
 \myattr.set and place(city,City,right of=per-addr)
-\myattr.connect(per-addr)
+\myattr.multi connect(per-addr,{street,city})
 
-\myentity.multi connect(per-id,per-age,per-name,per-phone,per-addr,rel)
+\myentity.multi connect(per,{per-id,per-age,per-name,per-phone,per-addr,rel})
 \end{tikzpicture}
 \end{document}
 %    \end{macrocode}

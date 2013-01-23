@@ -29,10 +29,10 @@
 \myentity.set and draw(tool,Tool,1,0)
 \myattr.set and place(tool-id,\underline{ID},left of=tool)
 \myattr.set and place(tool-name,Name,right of=tool)
-\myentity.multi connect(tool-id,tool-name)
+\myentity.multi connect(tool,{tool-id,tool-name})
 
 \myrel.set and place(rel,Uses,above of=tool)
-\myrel.total relation(tool)
+\myrel.total relation(rel,tool)
 
 \myentity.set text color(blue)
 \myentity.set border color(red)
@@ -53,12 +53,11 @@
 \myattr.set and place(per-addr,Address,above right of=per)
 
 \myattr.set and place(street,Street,above right of=per-addr)
-\myattr.connect(per-addr)
 
 \myattr.set and place(city,City,right of=per-addr)
-\myattr.connect(per-addr)
+\myattr.multi connect(per-addr,{street,city})
 
-\myentity.multi connect(per-id,per-age,per-name,per-phone,per-addr,rel)
+\myentity.multi connect(per,{per-id,per-age,per-name,per-phone,per-addr,rel})
 \end{tikzpicture}
 \end{document}
 %% 

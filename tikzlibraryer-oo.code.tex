@@ -94,18 +94,18 @@
   \pgfoothis.place(#3)
  }
 
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
 
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }
  }
 
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
 
 }
@@ -184,18 +184,18 @@
   \pgfoothis.place(#3)
  }
 
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
 
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }
  }
 
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
 
 }
@@ -285,18 +285,18 @@
   \pgfoothis.place(#3)
  }
 
- \method connect(#1) {
-  \draw[-] (\pgfoovalueof{label})--(#1);
+ \method connect(#1,#2) {
+  \draw[-] (#1)--(#2);
  }
 
- \method multi connect(#1) {
-  \foreach \i in {#1}{
-    \draw[-] (\pgfoovalueof{label})--(\i);
+ \method multi connect(#1,#2) {
+  \foreach \i in {#2}{
+    \draw[-] (#1)--(\i);
   }
  }
 
- \method total relation(#1) {
-  \draw[-,double,double distance=1.5pt] (\pgfoovalueof{label})--(#1);
+ \method total relation(#1,#2) {
+  \draw[-,double,double distance=1.5pt] (#1)--(#2);
  }
 
 }
